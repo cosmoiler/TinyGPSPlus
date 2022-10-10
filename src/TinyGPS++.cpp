@@ -26,6 +26,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include <string.h>
 #include <ctype.h>
 #include <stdlib.h>
+#include "math.h"
 
 #define _GPRMCterm   "GPRMC"
 #define _GPGGAterm   "GPGGA"
@@ -161,7 +162,7 @@ bool TinyGPSPlus::endOfTermHandler()
   // If it's the checksum term, and the checksum checks out, commit
   if (isChecksumTerm)
   {
-    byte checksum = 16 * fromHex(term[0]) + fromHex(term[1]);
+    uint8_t checksum = 16 * fromHex(term[0]) + fromHex(term[1]);
     if (checksum == parity)
     {
       passedChecksumCount++;
@@ -338,7 +339,7 @@ void TinyGPSLocation::commit()
 {
    rawLatData = rawNewLatData;
    rawLngData = rawNewLngData;
-   lastCommitTime = millis();
+   lastCommitTime = esp_timer_get_time();
    valid = updated = true;
 }
 
@@ -369,14 +370,14 @@ double TinyGPSLocation::lng()
 void TinyGPSDate::commit()
 {
    date = newDate;
-   lastCommitTime = millis();
+   lastCommitTime = esp_timer_get_time();
    valid = updated = true;
 }
 
 void TinyGPSTime::commit()
 {
    time = newTime;
-   lastCommitTime = millis();
+   lastCommitTime = esp_timer_get_time();
    valid = updated = true;
 }
 
@@ -436,7 +437,7 @@ uint8_t TinyGPSTime::centisecond()
 void TinyGPSDecimal::commit()
 {
    val = newval;
-   lastCommitTime = millis();
+   lastCommitTime = esp_timer_get_time();
    valid = updated = true;
 }
 
@@ -448,7 +449,7 @@ void TinyGPSDecimal::set(const char *term)
 void TinyGPSInteger::commit()
 {
    val = newval;
-   lastCommitTime = millis();
+   lastCommitTime = esp_timer_get_time();
    valid = updated = true;
 }
 
@@ -478,7 +479,7 @@ void TinyGPSCustom::begin(TinyGPSPlus &gps, const char *_sentenceName, int _term
 void TinyGPSCustom::commit()
 {
    strcpy(this->buffer, this->stagingBuffer);
-   lastCommitTime = millis();
+   lastCommitTime = esp_timer_get_time();
    valid = updated = true;
 }
 
