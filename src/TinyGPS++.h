@@ -103,7 +103,7 @@ public:
 private:
    bool valid, updated;
    uint32_t date, newDate;
-   uint32_t lastCommitTime;
+   uint64_t lastCommitTime;
    void commit();
    void setDate(const char *term);
 };
@@ -128,7 +128,7 @@ public:
 private:
    bool valid, updated;
    uint32_t time, newTime;
-   uint32_t lastCommitTime;
+   uint64_t lastCommitTime;
    void commit();
    void setTime(const char *term);
 };
@@ -147,7 +147,7 @@ public:
 
 private:
    bool valid, updated;
-   uint32_t lastCommitTime;
+   uint64_t lastCommitTime;
    int32_t val, newval;
    void commit();
    void set(const char *term);
@@ -167,7 +167,7 @@ public:
 
 private:
    bool valid, updated;
-   uint32_t lastCommitTime;
+   uint64_t lastCommitTime;
    uint32_t val, newval;
    void commit();
    void set(const char *term);
@@ -218,7 +218,7 @@ private:
 
    char stagingBuffer[_GPS_MAX_FIELD_SIZE + 1];
    char buffer[_GPS_MAX_FIELD_SIZE + 1];
-   unsigned long lastCommitTime;
+   uint64_t lastCommitTime;
    bool valid, updated;
    const char *sentenceName;
    int termNumber;
